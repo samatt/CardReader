@@ -75,13 +75,13 @@ void loop()
     }
 
     //send this data via serial
+    Serial.print("Facility Number: ");
     Serial.println(facilityNumber);
+    Serial.print("Card ID: ");
     Serial.println(idNumber);
 
     clearData();
 
-    Serial.println("here");
-    Serial.println(count);
   }
 
 }
