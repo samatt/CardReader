@@ -32,8 +32,6 @@
 //These pins are labelled on the card reader.
 int clockPin = 3;
 int dataPin = 2;
-
-int facilityNumber = 0;
 long idNumber = 0;
 volatile int count = 0;
 volatile byte data[300];
@@ -60,41 +58,51 @@ void loop()
   {
     Serial.println("READ COMPLETE!");
 
-    //decode the facility number    
-    for (int i = 27; i <39; i++)
-    {
-      facilityNumber <<= 1;
-      facilityNumber |= data[i];
-    }
-
-    //decode the id number 
-    for (int j = 39; j <59; j++)
-    {
-      idNumber <<= 1;
-      idNumber |= data[j];
-    }
-
+    int facilityData = getFacilityNumber(data); 
+    long idNumber = getIdNumber(data);
+   
     //send this data via serial
-    Serial.println(facilityNumber);
+    Serial.print("Facility Number: ");
+    Serial.println(facilityData);
+    Serial.print("Card ID: ");
     Serial.println(idNumber);
 
     clearData();
 
-    Serial.println("here");
-    Serial.println(count);
   }
 
 }
 
 void clearData(){
   count = 0;
-  idNumber = 0;
-  facilityNumber= 0;
-
   for (int a = 0; a < 200; a++)
   {
     data[a] = 0;
   }
+}
+
+
+int getFacilityNumber(volatile byte bitStream[]){
+  int facilityNumber = 0; 
+  for (int i = 27; i <39; i++)
+  {
+    facilityNumber <<= 1;
+    facilityNumber |= bitStream[i];
+  }
+
+  return facilityNumber; 
+}
+
+long getIdNumber(volatile byte bitStream[]){
+  long idNumber = 0;
+  for (int j = 39; j <59; j++)
+  {
+    idNumber <<= 1;
+    idNumber |= bitStream[j];
+  }
+  
+  return idNumber;
+  
 }
 
 void readBit()
@@ -111,6 +119,7 @@ void readBit()
   }
   count++;
 }
+
 
 
 
