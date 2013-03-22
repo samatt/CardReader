@@ -23,7 +23,7 @@
    a: Parity Check stuff
    
    In this sketch only the y and z bits are being decoded and the rest are being ignored.
-   
+   d
    created 22 Mar 2013
    by Surya Mattu and Luis Daniel
    
