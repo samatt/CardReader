@@ -8,17 +8,20 @@ class CardReader {
     //CardReader(int protocol); // perhaps a choice between Weigand and C&D
     //CardReader();
     CardReader(int dataPin, int clockPin);
-    void readCard();
+    bool cardRead();
     void readBit();
     void clearData();
+    long getCardId();
+    int getFacilityNumber();
+    long getIdNumber();
 
+    //These pins are labelled on the card reader.
     int clockPin;
     int dataPin;
-    int facilityNumber;
     long idNumber;
-    bool idPresent;
     volatile int count;
     volatile byte data[300];
+
 };
 
 
