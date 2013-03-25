@@ -1,7 +1,7 @@
 This library will allow you to read iClass DH cards with a multiClass HID Card Reader using Clock and Data Protocol.
 
-The Library is still being developed. 
+As Surya and I get different types of cards, we will add functionality to the library. Aslo, when we get a Wiegand Protocol Card Reader, we will also add that.
 
-The .ino file will read the card on its own. To run the file, you will need to remove the .h and .cpp files from the .ino folder. Otherwise, Arduino will try to run the .h and .cpp files. 
+You'll see in the example file there is a wrapper function for attachInterrupt() in the setup function. We will work on integrating this into the library so the user doesn't have to worry about it. 
 
-The .h and .cpp files will be soon released as their own library.
+
