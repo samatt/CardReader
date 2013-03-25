@@ -32,7 +32,9 @@
 #include "CardReader.h"
 
 
-CardReader::CardReader(int clockPin, int dataPin) {
+CardReader::CardReader(int _clockPin, int _dataPin) {
+  clockPin = _clockPin;
+  dataPin = _dataPin;
   pinMode(dataPin, INPUT);
   pinMode(clockPin, INPUT);
   //attachInterrupt(1, readBit, RISING);
@@ -41,7 +43,7 @@ CardReader::CardReader(int clockPin, int dataPin) {
   {
     data[a] = 0;
   }
-  interrupts();
+  //interrupts();
 }
 
 bool CardReader::cardRead() {
@@ -49,6 +51,19 @@ bool CardReader::cardRead() {
   //211 seems to be the number of bits that come in per tap.
   if (count >= 211) {
     //Serial.println("READ COMPLETE!");
+    facilityNumber = 0; 
+    for (int i = 27; i <39; i++) 
+    {
+      facilityNumber <<= 1;
+      facilityNumber |= data[i];
+    }
+    idNumber = 0;
+    for (int j = 39; j <59; j++) 
+    {
+      idNumber <<= 1;
+      idNumber |= data[j];
+    }
+    clearData();
     return true;
   } else {
     return false;
@@ -68,24 +83,10 @@ void CardReader::clearData(){
 
 
 int CardReader::getFacilityNumber(){
-  int facilityNumber = 0; 
-  for (int i = 27; i <39; i++) 
-  {
-    facilityNumber <<= 1;
-    facilityNumber |= data[i];
-  }
-  clearData();
   return facilityNumber; 
 }
 
 long CardReader::getIdNumber(){
-  long idNumber = 0;
-  for (int j = 39; j <59; j++) 
-  {
-    idNumber <<= 1;
-    idNumber |= data[j];
-  }
-  //clearData();
   return idNumber;
   
 }

@@ -19,6 +19,7 @@ class CardReader {
     int clockPin;
     int dataPin;
     long idNumber;
+    int facilityNumber;
     volatile int count;
     volatile byte data[300];
 
