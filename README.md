@@ -1,7 +1,27 @@
-This library will allow you to read iClass DH cards with a multiClass HID Card Reader using Clock and Data Protocol.
+# HID Card Reader Arduino Library
 
-As Surya and I get different types of cards, we will add functionality to the library. Aslo, when we get a Wiegand Protocol Card Reader, we will also add that.
+## Overview
+This library will allow you to read iClass DH cards with a multiClass HID Card Reader.
 
-You'll see in the example file there is a wrapper function for attachInterrupt() in the setup function. We will work on integrating this into the library so the user doesn't have to worry about it. 
+These card readers come in two flavors: Wiegand protocol or Clock and Data protocol. 
+
+**This library currently supports the Clock and Data protocol**. Readers that use the Clock and data protocol should have a 'CD' in the model name.
+
+
+
+At the moment you need to include  
+
+
+`void readBit() {
+reader.readBit();
+}`
+
+
+ in the main sketch and attach it to an interrupt in setup()
+ 
+`attachInterrupt(1, readBit, RISING);`
+
+
+You'll see in the example file there is a wrapper function for attachInterrupt() in the setup function. We will work on 
 
 
